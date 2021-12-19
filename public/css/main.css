@@ -7,14 +7,14 @@ body{
 .content{
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(45deg,#24006b,#f42f8c);
+    background: linear-gradient(45deg,#08d3d3,#199edb);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .content > h2{
-    font-size: 40px;
+    font-size: 60px;
     color: #fff;
     font-weight: 100;
 }
@@ -27,15 +27,17 @@ body{
     display: block;
     padding: 10px 20px;
     /* background-color: #fff; */
+    /* 框内 */
     background: rgba(255, 255, 255, 0.1);
     text-decoration: none;
     border-radius: 8px;
     margin: 0 10px;
     color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    font-size: 30px;
+    box-shadow: 0 0 15px rgba(4, 27, 53, 0.3);
     transition: 0.2s ease;
 }
 
 .content > .content1 > a:hover{
-    background: rgba(59, 181, 255, 0.8);
+    background: rgb(72, 217, 253);
 }

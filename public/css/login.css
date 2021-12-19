@@ -12,7 +12,7 @@ body{
     width: 100vw;
     height: 100vh;
     /* background-color: rgb(0, 161, 234); */
-    background: linear-gradient(45deg,#24006b,#f42f8c);
+    background: linear-gradient(45deg,#08d3d3,#199edb);
     display: flex;
     justify-content: center;
     align-items: center;

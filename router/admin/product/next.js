@@ -20,15 +20,16 @@ router.get('/',function(request,response){
             return false
         }else{
             console.log("获取数据成功")
-            // console.log(data)
+            console.log(data)
             console.log(data.length)
 
-            if(data.length <= 0){
+            if(data.length < 0){
                 // 说明下一页没有了
                 response.send("<script>location.href='/product?pageIndex="+ request.session.pageIndex +"';</script>")
             }else{
                 // 说明下一页还有
-                request.session.pageIndex = pageIndex+1
+                // let pageIndex = request.session.pageIndex
+                request.session.pageIndex = pageIndex + 1
                 response.send("<script>location.href='/product?pageIndex="+ request.session.pageIndex +"';</script>")
             }
         }
