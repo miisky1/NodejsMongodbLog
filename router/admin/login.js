@@ -10,6 +10,7 @@ const DB = require("../../mongodb.js")
 const bodyParser = require("body-parser")
 
 
+
 // /login
 
 router.get('/',function(request,response){
@@ -29,7 +30,7 @@ router.get('/register',function(request,response){
 router.post('/doRegister',function(request,response){
     console.log(request.body)
 
-    DB.insert('user',{ name:request.body.name,password:md5(request.body.password) },function(error,result){
+    DB.insert('user',{ name:request.body.name,password:md5(request.body.password),isAdmin:false},function(error,result){
         if(error){
             console.log("数据添加失败")
             console.log(error)
@@ -48,8 +49,8 @@ router.post('/doRegister',function(request,response){
 
 router.post('/doLogin',function(request,response){
     console.log(request.body)
-
-    DB.find('user',{ name:request.body.name,password:md5(request.body.password) },function(error,result){
+    
+    DB.find('user',{ name:request.body.name,password:md5(request.body.password)},function(error,result){
         if(error){
             console.log(error)
             return false

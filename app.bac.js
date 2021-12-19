@@ -3,16 +3,10 @@ const ejs = require("ejs")
 const fs = require("fs")
 const md5 = require("md5-node")
 const multiparty = require("multiparty")
-
-// const cookieParser = require("cookie-parser")
 const session = require("express-session")
-
-const DB = require("./mongodb.js")
 const bodyParser = require("body-parser")
 
-// const port=3000
-// const hostname='127.0.0.1'
-
+const DB = require("./mongodb.js")
 const app = new express()
 
 // 配置 session
@@ -25,8 +19,8 @@ app.use(session({
     }
 }))
 
-// // 配置 cookie
-// app.use(cookieParser())
+
+
 
 app.use(bodyParser.urlencoded({
     extended:false
@@ -49,7 +43,7 @@ app.engine("html",ejs.__express)
 
 const login = require("./router/admin/login.js")
 const product = require("./router/admin/product.js")
-
+const productdo = require("./router/admin/productdo.js")
 
 app.get('/',function(request,response){
     request.session.pageIndex = 2;
@@ -61,6 +55,7 @@ app.use('/login',login)
 
 app.use('/product',product)
 
+app.use('/productdo',productdo)
 
 
 

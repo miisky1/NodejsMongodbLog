@@ -17,22 +17,3 @@ MongoClient.connect(DBurl,{ useNewUrlParser:true },function(error,db){
         }))
     }
 })
-
-// mongoose.connect(DBurl,{ useNewUrlParser:true })
-// mongoose.connection.once('open',function(){
-//     console.log("数据库连接诶成功")
-// })
-
-// const userSchema = mongoose.Schema({
-//     name:String,
-//     password:Number
-// })
-
-// const userModel = mongoose.model('user',userSchema)
-
-// userModel.find({},function(error,data){
-//     if(!error){
-//         console.log("数据获取成功")
-//         console.log(data)
-//     }
-// })

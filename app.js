@@ -1,21 +1,13 @@
 const express = require("express")
 const ejs = require("ejs")
 const fs = require("fs")
-// const MongoClient = require("mongodb").MongoClient
 const md5 = require("md5-node")
-
 // 图片上传插件的使用
 const multiparty = require("multiparty")
-
-const DB = require("./mongodb.js")
-
-// const DBurl = 'mongodb://127.0.0.1:10086'
-
 const bodyParser = require("body-parser")
 
-// const port=3000
-// const hostname='127.0.0.1'
-
+const DB = require("./mongodb.js")
+var User = require('./router/user')
 const app = new express()
 
 // 配置 body-parser 中间件
@@ -28,6 +20,27 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname+"/public"))
 
 app.use('/upload',express.static("upload"))
+
+// 设置cookie
+app.use(function(req,res,next){
+    req.cookies=new Cookies(req,res)
+    console.log(typeof req.cookies.get('userInfo'))
+    req.userInfo={};
+    var cookiesUserInfo=req.cookies.get('userInfo')
+    if(cookiesUserInfo){
+        try{
+            req.userInfo=JSON.parse(cookiesUserInfo)
+            User.findById(req.userInfo._id).then(function(userInfo){
+                req.userInfo.isAdmin=Boolean(userInfo.isAdmin);
+                next();
+            })
+        }catch(e){
+            next();
+        }
+    }else{
+        next();
+    }
+})
 
 // app.use(express.static(__dirname+"/upload"))
 
@@ -57,7 +70,7 @@ app.post('/doRegister',function(request,response){
     console.log(request.body)
     // response.send("doRegister")
 
-    DB.insert('user',{ name:request.body.name,password:md5(request.body.password) },function(error,result){
+    DB.insert('user',{ name:request.body.name,password:md5(request.body.password),isAdmin:false},function(error,result){
         if(error){
             console.log("数据添加失败")
             console.log(error)
@@ -76,7 +89,7 @@ app.post('/doRegister',function(request,response){
 app.post('/doLogin',function(request,response){
     console.log(request.body)
 
-    DB.find('user',{ name:request.body.name,password:md5(request.body.password) },function(error,result){
+    DB.find('user',{ name:request.body.name,password:md5(request.body.password)},function(error,result){
         if(error){
             console.log(error)
             return false
@@ -117,10 +130,34 @@ app.get('/product',function(request,response){
             })
         }
     })
-
-
-
 })
+
+app.get('/productdo',function(request,response){
+    // response.send("商品列表")
+    router.use(function (req,res,next) {
+        // console.log("admin",req.userInfo.isAdmin,req.userInfo)
+        console.log("isAdmin")
+        console.log(req.userInfo.isAdmin)
+        // if(req.userInfo.isAdmin==false){
+        //     res.send("对不起，只有管理员才可以进入后台管理")
+        //     response.redirect('/product')
+        // }else{
+            DB.find('products',{},function(error,data){
+                if(error){
+                    console.log(error)
+                    return false
+                }else{
+                    console.log(data)
+                    response.render('productdo.html',{
+                        list:data
+                    })
+                }
+            })
+        // }
+    })
+    
+})
+
 app.get('/productdelete',function(request,response){
     console.log(request.query.id)
     const id = request.query.id
@@ -131,7 +168,7 @@ app.get('/productdelete',function(request,response){
             return false
         }else{
             console.log("商品删除成功")
-            response.send("<script>alert('成功删除商品~~');location.href='/product'</script>")
+            response.send("<script>alert('成功删除商品~~');location.href='/productdo'</script>")
         }
     })
 })
@@ -171,7 +208,7 @@ app.post('/doProductAdd',function(request,response){
                     return false
                 }else{
                     console.log("商品添加成功")
-                    response.send("<script>alert('商品添加成功~~');location.href='/product'</script>")
+                    response.send("<script>alert('商品添加成功~~');location.href='/productdo'</script>")
                 }
             })
         }
@@ -273,7 +310,7 @@ app.post('/doProductEdit',function(request,response){
                         }
                     })
                     // console.log(result)
-                    response.send("<script>alert('商品数据修改成功');location.href='/product'</script>")
+                    response.send("<script>alert('商品数据修改成功');location.href='/productdo'</script>")
                 }
             })
 
