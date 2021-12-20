@@ -7,7 +7,6 @@ const multiparty = require("multiparty")
 const bodyParser = require("body-parser")
 
 const DB = require("./mongodb.js")
-var User = require('./router/user')
 const app = new express()
 
 // 配置 body-parser 中间件
@@ -20,27 +19,6 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname+"/public"))
 
 app.use('/upload',express.static("upload"))
-
-// 设置cookie
-app.use(function(req,res,next){
-    req.cookies=new Cookies(req,res)
-    console.log(typeof req.cookies.get('userInfo'))
-    req.userInfo={};
-    var cookiesUserInfo=req.cookies.get('userInfo')
-    if(cookiesUserInfo){
-        try{
-            req.userInfo=JSON.parse(cookiesUserInfo)
-            User.findById(req.userInfo._id).then(function(userInfo){
-                req.userInfo.isAdmin=Boolean(userInfo.isAdmin);
-                next();
-            })
-        }catch(e){
-            next();
-        }
-    }else{
-        next();
-    }
-})
 
 // app.use(express.static(__dirname+"/upload"))
 
@@ -96,17 +74,20 @@ app.post('/doLogin',function(request,response){
         }else{
             console.log(result)
 
-            // 如果长度为0，说明没有
-            console.log(result.length)
-            if(result.length > 0){
-                // 长度为0 说明没有数据
-                console.log("登录成功")
-                response.redirect('/product')
-                // response.send("抱歉，你好没有注册")
-            }else{
-                console.log("登录失败")
-                response.send("<script>alert('登陆失败');location.href='/login';</script>")
-            }   
+             // 如果长度为0，说明没有
+             console.log(result.length)
+             if(request.body.name.length == 12){
+                 // 长度为0 说明没有数据
+                 console.log("管理员登录成功")
+                 response.redirect('/productdo')
+                 // response.send("抱歉，你好没有注册")
+             }else if(result.length > 0){
+                 console.log("用户登录成功")
+                 response.redirect('/product')
+             }else{
+                 console.log("登录失败")
+                 response.send("<script>alert('登陆失败');location.href='/login';</script>")
+             }  
 
         }
     })

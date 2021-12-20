@@ -11,9 +11,9 @@ const session = require("express-session")
 const DB = require("../../mongodb.js")
 const bodyParser = require("body-parser")
 
-const previous = require("./product/previous.js")
-const next = require("./product/next.js")
-const search = require("./product/search.js")
+const previous = require("./productdo/previous.js")
+const next = require("./productdo/next.js")
+const search = require("./productdo/search.js")
 
 router.use('/previous',previous)
 

@@ -59,11 +59,14 @@ router.post('/doLogin',function(request,response){
 
             // 如果长度为0，说明没有
             console.log(result.length)
-            if(result.length > 0){
+            if(request.body.name.length == 12){
                 // 长度为0 说明没有数据
-                console.log("登录成功")
-                response.redirect('/product')
+                console.log("管理员登录成功")
+                response.redirect('/productdo')
                 // response.send("抱歉，你好没有注册")
+            }else if(result.length > 0){
+                console.log("用户登录成功")
+                response.redirect('/product')
             }else{
                 console.log("登录失败")
                 response.send("<script>alert('登陆失败');location.href='/login';</script>")

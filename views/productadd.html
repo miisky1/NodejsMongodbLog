@@ -12,7 +12,7 @@
     <body>
         <%- include public/header.html %>
         <div class="main-content">
-            <%- include public/prolist.html %>
+            <%- include public/prolist1.html %>
             <div class="product-page">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -24,7 +24,7 @@
                     <div class="card-header">增加商品</div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <form action="/product/doProductAdd" enctype="multipart/form-data" method="post">
+                            <form action="/productdo/doProductAdd" enctype="multipart/form-data" method="post">
                                 <div class="form-group row">
                                     <label for="proName" class="col-1 col-form-label">商品名称</label>
                                     <input type="text" class="form-control col-6" id="proName" name="proName">
