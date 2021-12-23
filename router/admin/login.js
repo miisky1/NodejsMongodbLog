@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-
 const ejs = require("ejs")
 const fs = require("fs")
 const md5 = require("md5-node")
@@ -59,7 +58,7 @@ router.post('/doLogin',function(request,response){
 
             // 如果长度为0，说明没有
             console.log(result.length)
-            if(request.body.name.length == 12){
+            if(request.body.name== "admin"){
                 // 长度为0 说明没有数据
                 console.log("管理员登录成功")
                 response.redirect('/productdo')

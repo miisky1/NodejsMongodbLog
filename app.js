@@ -76,7 +76,7 @@ app.post('/doLogin',function(request,response){
 
              // 如果长度为0，说明没有
              console.log(result.length)
-             if(request.body.name.length == 12){
+             if(request.body.name == "admin"){
                  // 长度为0 说明没有数据
                  console.log("管理员登录成功")
                  response.redirect('/productdo')
@@ -302,7 +302,13 @@ app.post('/doProductEdit',function(request,response){
 
 
 // 端口号
-app.listen(10139)
+// app.listen(10139)
+
+
+const port = 10139
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
 // app.listen(port,hostname,function(){
 //     console.log(`app is running at http://${hostname}:${port}`)
 // })

@@ -19,9 +19,6 @@ app.use(session({
     }
 }))
 
-
-
-
 app.use(bodyParser.urlencoded({
     extended:false
 }))
@@ -60,7 +57,12 @@ app.use('/productdo',productdo)
 
 
 // 端口号
-app.listen(10139)
+// app.listen(10139)
+
+const port = 10139
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
 // app.listen(port,hostname,function(){
 //     console.log(`app is running at http://${hostname}:${port}`)
 // })

@@ -21,6 +21,7 @@ function __connectdb(callback){
 // 封装一个查询数据的方法
 
 // 查询方法
+//,pageIndex=1
 exports.find = function(collection,data,callback,pageIndex=1){
     __connectdb(function(db){
         db.db('190110910139').collection(collection).find(data).limit(5).skip(5*(pageIndex-1)).toArray(function(error,data){
