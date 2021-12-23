@@ -8,6 +8,7 @@ const session = require("express-session")
 
 
 
+
 // 商品搜索
 router.get('/',function(request,response){
     console.log("显示页码数")
